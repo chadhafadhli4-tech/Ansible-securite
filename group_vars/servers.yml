@@ -1,0 +1,13 @@
+---
+backup_dir: /var/backups/ansible
+backup_retention_days: 7
+disk_threshold: 80
+log_dir: /var/log/tpapp
+log_retention: 14
+server_role: primary
+ssh_alive_interval: 300
+ssh_login_grace: 30
+ssh_max_tries: 3
+time_service:
+  RedHat: chronyd
+  Debian: chrony
