@@ -1,0 +1,5 @@
+---
+- name: Durcissement et supervision
+  hosts: servers
+  become: true
+  tasks: []
