@@ -43,10 +43,10 @@
         line: '{{ item.option }} {{ item.valeur }}'
         validate: '/usr/sbin/sshd -t -f %s'
       loop: "{{ ssh_settings }}"
-      notify: Redémarrer le service SSH
+      notify: Redémarrer SSH
 
   handlers:
-    - name: Redémarrer le service SSH
+    - name: Redémarrer SSH
       ansible.builtin.service:
-        name: sshd
+        name: "{{ 'sshd' if ansible_os_family == 'RedHat' else 'ssh' }}"
         state: restarted
