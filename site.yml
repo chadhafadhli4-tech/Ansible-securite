@@ -2,6 +2,14 @@
 - name: Durcissement et supervision
   hosts: servers
   become: true
+  vars:
+    ssh_settings:
+      - option: MaxAuthTries
+        valeur: "{{ ssh_max_tries }}"
+      - option: LoginGraceTime
+        valeur: "{{ ssh_login_grace }}"
+      - option: ClientAliveInterval
+        valeur: "{{ ssh_alive_interval }}"
   tasks:
     - name: Déployer le message MOTD personnalisé
       ansible.builtin.template:
