@@ -10,9 +10,13 @@
         owner: root
         group: root
         mode: '0644'
+      tags:
+        - motd
 
     - name: Ajouter les hôtes gérés dans /etc/hosts
       ansible.builtin.blockinfile:
         path: /etc/hosts
         marker: "# {mark} ANSIBLE MANAGED HOSTS"
         block: "{{ lookup('template', 'templates/hosts_block.j2') }}"
+      tags:
+        - motd
