@@ -2,4 +2,11 @@
 - name: Durcissement et supervision
   hosts: servers
   become: true
-  tasks: []
+  tasks:
+    - name: Déployer le message MOTD personnalisé
+      ansible.builtin.template:
+        src: templates/motd.j2
+        dest: /etc/motd
+        owner: root
+        group: root
+        mode: '0644'
