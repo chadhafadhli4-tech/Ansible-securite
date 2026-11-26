@@ -35,3 +35,18 @@
         dest: /etc/ssh/sshd_config.bak
         remote_src: true
         force: false
+
+    - name: Appliquer les paramètres de sécurité SSH
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^[#\\s]*{{ item.option }}\\s+'
+        line: '{{ item.option }} {{ item.valeur }}'
+        validate: '/usr/sbin/sshd -t -f %s'
+      loop: "{{ ssh_settings }}"
+      notify: Redémarrer le service SSH
+
+  handlers:
+    - name: Redémarrer le service SSH
+      ansible.builtin.service:
+        name: sshd
+        state: restarted
