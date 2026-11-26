@@ -49,6 +49,41 @@
       tags:
         - ssh
 
+    - name: Créer le répertoire de journaux
+      ansible.builtin.file:
+        path: "{{ log_dir }}"
+        state: directory
+        owner: root
+        group: root
+        mode: '0750'
+      tags:
+        - logs
+
+    - name: Déployer la configuration logrotate
+      ansible.builtin.template:
+        src: templates/logrotate.j2
+        dest: /etc/logrotate.d/tpapp
+        owner: root
+        group: root
+        mode: '0644'
+      tags:
+        - logs
+
+    - name: Installer chrony
+      ansible.builtin.package:
+        name: chrony
+        state: present
+      tags:
+        - time
+
+    - name: Démarrer et activer le service chrony
+      ansible.builtin.service:
+        name: "{{ time_service[ansible_os_family] }}"
+        state: started
+        enabled: true
+      tags:
+        - time
+
   handlers:
     - name: Redémarrer SSH
       ansible.builtin.service:
