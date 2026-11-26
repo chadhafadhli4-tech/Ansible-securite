@@ -20,3 +20,10 @@
         block: "{{ lookup('template', 'templates/hosts_block.j2') }}"
       tags:
         - motd
+
+    - name: Sauvegarder la configuration SSH sans écraser une sauvegarde existante
+      ansible.builtin.copy:
+        src: /etc/ssh/sshd_config
+        dest: /etc/ssh/sshd_config.bak
+        remote_src: true
+        force: false
