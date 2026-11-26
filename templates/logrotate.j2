@@ -1,0 +1,7 @@
+{{ log_dir }}/*.log {
+    daily
+    rotate {{ log_retention }}
+    compress
+    missingok
+    notifempty
+}
