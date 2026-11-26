@@ -39,7 +39,7 @@
     - name: Appliquer les paramètres de sécurité SSH
       ansible.builtin.lineinfile:
         path: /etc/ssh/sshd_config
-        regexp: '^[#\\s]*{{ item.option }}\\s+'
+        regexp: '^[#\s]*{{ item.option }}\s+'
         line: '{{ item.option }} {{ item.valeur }}'
         validate: '/usr/sbin/sshd -t -f %s'
       loop: "{{ ssh_settings }}"
