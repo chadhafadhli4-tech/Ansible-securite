@@ -1,0 +1,38 @@
+---
+- name: Configuration du pare-feu UFW
+  hosts: managed_nodes
+  become: true
+
+  tasks:
+
+    - name: Installer UFW
+      apt:
+        name: ufw
+        state: present
+        update_cache: yes
+
+    - name: Autoriser SSH
+      ufw:
+        rule: allow
+        port: '22'
+        proto: tcp
+
+    - name: Autoriser HTTP
+      ufw:
+        rule: allow
+        port: '80'
+        proto: tcp
+
+    - name: Refuser les connexions entrantes par défaut
+      ufw:
+        direction: incoming
+        policy: deny
+
+    - name: Autoriser les connexions sortantes par défaut
+      ufw:
+        direction: outgoing
+        policy: allow
+
+    - name: Activer UFW
+      ufw:
+        state: enabled
